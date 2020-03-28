@@ -2,9 +2,11 @@ import argparse
 import json
 import pickle
 import spacy
+import en_core_web_sm
+nlp = en_core_web_sm.load()
 
 
-nlp = spacy.load('en_core_web_sm')
+#nlp = spacy.load('en_core_web_sm')
 
 def get_answer_spans(para_text):
     para_nlp = nlp(para_text)
