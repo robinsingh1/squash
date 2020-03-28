@@ -1,0 +1,7 @@
+pytorch-pretrained-BERT
+pytorch-ignite
+torch
+spacy==2.2.4
+tqdm
+torchvision
+dotmap

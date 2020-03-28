@@ -1,0 +1,8 @@
+pytorch-ignite 
+torch 
+transformers==2.5.1 
+tensorboardX==1.8 
+torchvision
+spacy
+dotmap
+pytorch-pretrained-BERT 

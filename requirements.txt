@@ -1,0 +1,7 @@
+torch
+pytorch-ignite
+#git+git://github.com/robinsingh1/pytorch-pretrained-BERT@master#pytorch-pretrained-BERT
+pytorch-pretrained-BERT
+torchvision
+spacy
+dotmap
