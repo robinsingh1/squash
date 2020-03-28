@@ -12,8 +12,9 @@ from argparse import ArgumentParser
 from pprint import pformat
 import torch
 import torch.nn.functional as F
+from pyspark import SparkFiles
 
-from pytorch_pretrained_bert import OpenAIGPTLMHeadModel, OpenAIGPTTokenizer, GPT2LMHeadModel, GPT2Tokenizer
+from pytorch_pretrained_bert import OpenAIGPTLMHeadModel, OpenAIGPTTokenizer, GPT2LMHeadModel, GPT2Tokenizer, GPT2Config
 from .train import SPECIAL_TOKENS
 from .train import build_para_only_input_from_segments, build_qa_only_input_from_segments
 from .dataloader import get_positional_dataset_from_file
@@ -193,6 +194,25 @@ def question_generation(_input):
         tokenizer = OpenAIGPTTokenizer.from_pretrained(args.model_checkpoint)
         model = OpenAIGPTLMHeadModel.from_pretrained(args.model_checkpoint)
     """
+
+    output_config_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/config.json"
+    output_model_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/pytorch_model.bin"
+    output_vocab_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/vocab.json"
+    merges_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/merges.txt"
+
+    output_config_file = SparkFiles.get("config.json")
+    output_model_file = SparkFiles.get("pytorch_model.bin")
+    output_vocab_file = SparkFiles.get("vocab.json")
+    merges_file = SparkFiles.get("merges.txt")
+
+    config = GPT2Config.from_json_file(output_config_file)
+    model = GPT2LMHeadModel(config)
+    state_dict = torch.load(output_model_file, map_location=torch.device('cpu'))
+    model.load_state_dict(state_dict)
+    tokenizer = GPT2Tokenizer(output_vocab_file, merges_file=merges_file)
+    model.to("cpu")
+    model.eval()
+    args.device = "cpu"
 
     args.device = "cpu"
     model.to(args.device)
