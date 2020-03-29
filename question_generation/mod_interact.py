@@ -218,6 +218,7 @@ def question_generation(_input):
     model.to(args.device)
     model.eval()
 
+    return {"break":"point"}
     #data = get_positional_dataset_from_file(tokenizer, args.filename)
     data = get_positional_dataset_from_file(tokenizer, output)
     final_output_dict = {
