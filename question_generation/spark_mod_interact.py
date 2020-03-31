@@ -12,7 +12,7 @@ from argparse import ArgumentParser
 from pprint import pformat
 import torch
 import torch.nn.functional as F
-from pyspark import SparkFiles
+#from pyspark import SparkFiles
 
 from pytorch_pretrained_bert import OpenAIGPTLMHeadModel, OpenAIGPTTokenizer, GPT2LMHeadModel, GPT2Tokenizer, GPT2Config
 from .train import SPECIAL_TOKENS
