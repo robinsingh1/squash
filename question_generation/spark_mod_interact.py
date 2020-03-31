@@ -12,7 +12,7 @@ from argparse import ArgumentParser
 from pprint import pformat
 import torch
 import torch.nn.functional as F
-#from pyspark import SparkFiles
+from pyspark import SparkFiles
 
 from pytorch_pretrained_bert import OpenAIGPTLMHeadModel, OpenAIGPTTokenizer, GPT2LMHeadModel, GPT2Tokenizer, GPT2Config
 from .train import SPECIAL_TOKENS
@@ -174,7 +174,6 @@ def question_generation(_input):
 
 
     # NEW BLOCK
-    """
     model_checkpoint = "question_generation/gpt2_corefs_question_generation"
     model_checkpoint = "/home/gpt2_corefs_question_generation"
     model_type = "gpt2"
@@ -182,8 +181,6 @@ def question_generation(_input):
     SAVED_MODEL_DIR = "gpt2_corefs_question_generation"
     dir_path = os.path.dirname(os.path.realpath(__file__))
     model_checkpoint = os.path.join(dir_path, SAVED_MODEL_DIR)
-    """
-
     model_checkpoint = "question_generation/gpt2_corefs_question_generation"
 
     tokenizer = GPT2Tokenizer.from_pretrained(model_checkpoint)
@@ -198,7 +195,6 @@ def question_generation(_input):
         model = OpenAIGPTLMHeadModel.from_pretrained(args.model_checkpoint)
     """
 
-    """ SPARK
     output_config_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/config.json"
     output_model_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/pytorch_model.bin"
     output_vocab_file = "/content/squash-generation/question_generation/gpt2_corefs_question_generation/vocab.json"
@@ -217,7 +213,6 @@ def question_generation(_input):
     model.to("cpu")
     model.eval()
     args.device = "cpu"
-    """
 
     args.device = "cpu"
     model.to(args.device)
